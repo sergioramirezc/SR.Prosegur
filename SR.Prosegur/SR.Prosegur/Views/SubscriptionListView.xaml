@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SR.Prosegur.Views.SubscriptionListView"
+    xmlns:viewModelBase="clr-namespace:SR.Prosegur.ViewModels.Base;assembly=SR.Prosegur"
+    xmlns:viewmodels="clr-namespace:SR.Prosegur.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:models="clr-namespace:SR.Prosegur.Models"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    NavigationPage.HasNavigationBar="False"
+    x:DataType="viewmodels:SubscriptionListViewModel"
+    x:Name="SubscriptionPage">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout>
+                <StackLayout
+                    Margin="20,10,20,0"
+                    Orientation="Horizontal"
+                    VerticalOptions="Start">
+                    <Label
+                        Text="Subscriptions"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource TitleTextColor}" />
+                    <Label Style="{StaticResource SubscriptionCountStyle}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    Text="Actives: "
+                                    TextColor="{StaticResource TitleTextColor}" />
+                                <Span
+                                    Text="{Binding ActiveCount}"
+                                    TextColor="{StaticResource PrimaryColor}" />
+                                <Span
+                                    Text="{Binding TotalCount, StringFormat='/{0}'}"
+                                    TextColor="{StaticResource TitleTextColor}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+                <RefreshView
+                    IsRefreshing="{Binding IsRefreshing}"
+                    Command="{Binding RefreshCommand}">
+                    <CollectionView
+                        VerticalOptions="FillAndExpand"
+                        ItemTemplate="{StaticResource CompletedTemplate}"
+                        ItemsSource="{Binding UserList}" />
+                </RefreshView>
+            </StackLayout>
+            <Grid
+                BackgroundColor="#000000"
+                Opacity=".25"
+                IsVisible="{Binding IsBusy}">
+                <ActivityIndicator
+                    IsRunning="True"
+                    Opacity="1"
+                    VerticalOptions="Center"
+                    WidthRequest="150"
+                    HeightRequest="150" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate
+                x:Key="CompletedTemplate"
+                x:DataType="models:UserModel">
+                <Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={x:Reference Name=SubscriptionPage}, Path=BindingContext.ItemSelectedCommand}"
+                            CommandParameter="{Binding .}" />
+                    </Grid.GestureRecognizers>
+                    <Frame
+                        Margin="20,8"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Style="{StaticResource ItemFrameStyle}"
+                        xct:ShadowEffect.Color="#000000"
+                        IsClippedToBounds="True"
+                        xct:ShadowEffect.Radius="6"
+                        xct:ShadowEffect.Opacity=".8">
+                        <Grid
+                            RowSpacing="0"
+                            Margin="15">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label
+                                Grid.Row="0"
+                                Style="{StaticResource ItemTitleStyle}"
+                                TextColor="{StaticResource PrimaryTextColor}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding FirstName}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding LastName}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Image
+                                Grid.Row="0"
+                                Source="arrow_right_w"
+                                Style="{StaticResource ItemArrowStyle}" />
+
+                            <Label
+                                Grid.Row="1"
+                                Text="{Binding Email}"
+                                Style="{StaticResource ItemDescriptionStyle}"
+                                TextColor="{StaticResource PrimaryTextColor}" />
+
+                            <Label
+                                Grid.Row="2"
+                                TextColor="{StaticResource PrimaryTextColor}"
+                                FontSize="12"
+                                FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Subscription.Plan}" />
+                                        <Span Text="{Binding Subscription.Term, StringFormat=' / {0}'}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label
+                                Grid.Row="2"
+                                Text="{Binding Subscription.Status}"
+                                Margin="0,0,15,0"
+                                HorizontalOptions="End"
+                                TextColor="{StaticResource PrimaryTextColor}"
+                                FontSize="12"
+                                FontAttributes="Bold" />
+                            <BoxView
+                                Grid.Row="2"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                CornerRadius="5"
+                                HeightRequest="10"
+                                WidthRequest="10"
+                                Color="{Binding Subscription.Status, Converter={StaticResource StatusColorConverter}}" />
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+
+            <Style
+                TargetType="Frame"
+                x:Key="ItemFrameStyle">
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="CornerRadius" Value="20" />
+            </Style>
+            <Style
+                TargetType="Image"
+                x:Key="ItemArrowStyle">
+                <Setter Property="Aspect" Value="AspectFill" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="HeightRequest" Value="25" />
+                <Setter Property="WidthRequest" Value="25" />
+            </Style>
+            <Style
+                TargetType="Label"
+                x:Key="ItemDescriptionStyle">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="MaxLines" Value="2" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+            </Style>
+            <Style
+                TargetType="Label"
+                x:Key="SubscriptionCountStyle">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+</ContentPage>

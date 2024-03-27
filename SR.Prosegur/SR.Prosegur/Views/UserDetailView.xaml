@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModelBase="clr-namespace:SR.Prosegur.ViewModels.Base;assembly=SR.Prosegur"
+    xmlns:viewmodels="clr-namespace:SR.Prosegur.ViewModels"
+    viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+    x:Class="SR.Prosegur.Views.UserDetailView"
+    x:DataType="viewmodels:UserDetailViewModel"
+    Title="User Detail">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout
+                    HeightRequest="80"
+                    BackgroundColor="{StaticResource PrimaryColor}">
+                    <Frame
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        BackgroundColor="#FFFFFF"
+                        HorizontalOptions="Center"
+                        Padding="0"
+                        IsClippedToBounds="True">
+                        <Image
+                            Source="{Binding User.Avatar}"
+                            HorizontalOptions="Center" />
+                    </Frame>
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource ItemTitleStyle}"
+                        TextColor="{StaticResource PrimaryTextColor}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding User.FirstName}" />
+                                <Span Text=" " />
+                                <Span Text="{Binding User.LastName}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+                <!--  Personal Information Section  -->
+                <Label
+                    Text="Personal Information"
+                    FontSize="Large"
+                    Margin="10,10,10,5"
+                    TextColor="Black"
+                    HorizontalOptions="StartAndExpand" />
+                <Grid Margin="10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Username  -->
+                    <Label
+                        Text="Username:"
+                        Grid.Row="0"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Username}"
+                        Grid.Row="0"
+                        Grid.Column="1" />
+
+                    <!--  Social Insurance Number  -->
+                    <Label
+                        Text="Social Insurance Number:"
+                        Grid.Row="1"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.SocialInsuranceNumber}"
+                        Grid.Row="1"
+                        Grid.Column="1" />
+
+                    <!--  Email  -->
+                    <Label
+                        Text="Email:"
+                        Grid.Row="2"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Email}"
+                        Grid.Row="2"
+                        Grid.Column="1" />
+
+                    <!--  Gender  -->
+                    <Label
+                        Text="Gender:"
+                        Grid.Row="3"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Gender}"
+                        Grid.Row="3"
+                        Grid.Column="1" />
+
+                    <!--  Birthdate  -->
+                    <Label
+                        Text="Birthdate:"
+                        Grid.Row="4"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.DateOfBirth}"
+                        Grid.Row="4"
+                        Grid.Column="1" />
+
+                    <!--  Employment  -->
+                    <Label
+                        Text="Employment:"
+                        Grid.Row="5"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Employment.Title}"
+                        Grid.Row="5"
+                        Grid.Column="1" />
+                </Grid>
+
+                <!--  Subscription Section  -->
+                <Label
+                    Text="Subscription"
+                    FontSize="Large"
+                    Margin="10,10,10,5"
+                    TextColor="Black"
+                    HorizontalOptions="StartAndExpand" />
+                <Grid Margin="10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Plan  -->
+                    <Label
+                        Text="Plan:"
+                        Grid.Row="0"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Subscription.Plan}"
+                        Grid.Row="0"
+                        Grid.Column="1" />
+
+                    <!--  Status  -->
+                    <Label
+                        Text="Status:"
+                        Grid.Row="1"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Subscription.Status}"
+                        Grid.Row="1"
+                        Grid.Column="1" />
+
+                    <!--  Payment Method  -->
+                    <Label
+                        Text="Payment Method:"
+                        Grid.Row="2"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Subscription.PaymentMethod}"
+                        Grid.Row="2"
+                        Grid.Column="1" />
+
+                    <!--  Term  -->
+                    <Label
+                        Text="Term:"
+                        Grid.Row="3"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Subscription.Term}"
+                        Grid.Row="3"
+                        Grid.Column="1" />
+
+                    <!--  Credit Card  -->
+                    <Label
+                        Text="Credit Card:"
+                        Grid.Row="4"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.CreditCard.CcNumber}"
+                        Grid.Row="4"
+                        Grid.Column="1" />
+                </Grid>
+
+                <!--  Address Section  -->
+                <Label
+                    Text="Address"
+                    FontSize="Large"
+                    Margin="10,10,10,5"
+                    TextColor="Black"
+                    HorizontalOptions="StartAndExpand" />
+                <Grid Margin="10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Country  -->
+                    <Label
+                        Text="Country:"
+                        Grid.Row="0"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Address.Country}"
+                        Grid.Row="0"
+                        Grid.Column="1" />
+
+                    <!--  State  -->
+                    <Label
+                        Text="State:"
+                        Grid.Row="1"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Address.State}"
+                        Grid.Row="1"
+                        Grid.Column="1" />
+
+                    <!--  City  -->
+                    <Label
+                        Text="City:"
+                        Grid.Row="2"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Address.City}"
+                        Grid.Row="2"
+                        Grid.Column="1" />
+
+                    <!--  Street Name  -->
+                    <Label
+                        Text="Street Name:"
+                        Grid.Row="3"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Address.StreetName}"
+                        Grid.Row="3"
+                        Grid.Column="1" />
+
+                    <!--  Street Address  -->
+                    <Label
+                        Text="Street Address:"
+                        Grid.Row="4"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Address.StreetAddress}"
+                        Grid.Row="4"
+                        Grid.Column="1" />
+
+                    <!--  Zip Code  -->
+                    <Label
+                        Text="Zip Code:"
+                        Grid.Row="5"
+                        Grid.Column="0" />
+                    <Label
+                        Text="{Binding User.Address.ZipCode}"
+                        Grid.Row="5"
+                        Grid.Column="1" />
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
